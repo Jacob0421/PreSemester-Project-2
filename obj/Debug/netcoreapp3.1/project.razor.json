@@ -20536,13 +20536,13 @@
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\Jacob\\Github\\PreSemester Project\\Views\\Home\\Add_Volunteer.cshtml",
-      "TargetPath": "Views\\Home\\Add_Volunteer.cshtml",
+      "FilePath": "c:\\Users\\Jacob\\Github\\PreSemester Project\\Views\\Home\\Create.cshtml",
+      "TargetPath": "Views\\Home\\Create.cshtml",
       "FileKind": "mvc"
     },
     {
-      "FilePath": "c:\\Users\\Jacob\\Github\\PreSemester Project\\Views\\Home\\Landing.cshtml",
-      "TargetPath": "Views\\Home\\Landing.cshtml",
+      "FilePath": "c:\\Users\\Jacob\\Github\\PreSemester Project\\Views\\Home\\ManageVolunteers.cshtml",
+      "TargetPath": "Views\\Home\\ManageVolunteers.cshtml",
       "FileKind": "mvc"
     },
     {
@@ -20556,8 +20556,18 @@
       "FileKind": "mvc"
     },
     {
+      "FilePath": "c:\\Users\\Jacob\\Github\\PreSemester Project\\Views\\Home\\Edit.cshtml",
+      "TargetPath": "Views\\Home\\Edit.cshtml",
+      "FileKind": "mvc"
+    },
+    {
       "FilePath": "c:\\Users\\Jacob\\Github\\PreSemester Project\\Views\\Shared\\_Layout.cshtml",
       "TargetPath": "Views\\Shared\\_Layout.cshtml",
+      "FileKind": "mvc"
+    },
+    {
+      "FilePath": "c:\\Users\\Jacob\\Github\\PreSemester Project\\Views\\Home\\SearchResults.cshtml",
+      "TargetPath": "Views\\Home\\SearchResults.cshtml",
       "FileKind": "mvc"
     },
     {

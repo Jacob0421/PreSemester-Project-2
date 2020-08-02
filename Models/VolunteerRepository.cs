@@ -69,11 +69,21 @@ namespace PreSemester_Project.Models
         //Currently A WIP
         public IEnumerable<Volunteer> Search(string key)
         {
-            IEnumerable<Volunteer> searchResults = _volunteerList.Where(v => v.FirstName == key 
-                                                                        || v.LastName == key 
-                                                                        || v.Username == key);
+            IEnumerable<Volunteer> searchResults = _volunteerList.Where(v => v.FirstName.Contains(key)
+
+                                                                        || v.LastName.Contains(key)
+                                                                        || v.Username.Contains(key)
+                                                                        || (v.FirstName + " " + v.LastName).Contains(key));
 
             return searchResults;
+        }
+
+        public List<Volunteer> FilterApprovalStatus(string approvalStatus)
+        {
+
+            List<Volunteer> results = _volunteerList.Where(v => v.ApprovalStatus == approvalStatus).ToList();
+
+            return results;
         }
     }
 }

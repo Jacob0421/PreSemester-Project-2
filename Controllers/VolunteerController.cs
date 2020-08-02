@@ -21,17 +21,22 @@ namespace PreSemester_Project.Controllers
             return View();
         }
 
+
+
         // GET: VolunteerController/Create
         public ActionResult Create()
         {
             return View();
+
         }
+
 
         // POST: VolunteerController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create(IFormCollection collection)
         {
+
             try
             {
                 return RedirectToAction(nameof(Index));
@@ -40,7 +45,10 @@ namespace PreSemester_Project.Controllers
             {
                 return View();
             }
+
+
         }
+
 
         // GET: VolunteerController/Edit/5
         public ActionResult Edit(int id)

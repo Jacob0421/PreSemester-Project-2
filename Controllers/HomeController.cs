@@ -71,6 +71,31 @@ namespace PreSemester_Project.Controllers
             //} 
         }
 
+        public ActionResult Options()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public RedirectToActionResult Volunteers()
+        {
+            return RedirectToAction("ManageVolunteers");
+        }
+
+        [HttpPost]
+        public IActionResult Opportunities()
+        {
+            return View("Index");
+
+        }
+
+        [HttpPost]
+        public IActionResult CancelVolunteer()
+        {
+            IEnumerable<Volunteer> volList = _volunteerRepository.GetAllVolunteers();
+            ViewData.Model = volList;
+            return View("ManageVolunteers");
+        }
         public ActionResult ManageVolunteers()
         {
             IEnumerable<Volunteer> volList = _volunteerRepository.GetAllVolunteers();
@@ -79,7 +104,7 @@ namespace PreSemester_Project.Controllers
             return View();
         }
 
-        
+
         public ActionResult Create()
         {
             return View();
@@ -88,10 +113,10 @@ namespace PreSemester_Project.Controllers
         [HttpPost]
         public RedirectToActionResult Create(Volunteer newVol)
         {
+
             _volunteerRepository.Add(newVol);
-
-
             return RedirectToAction("ManageVolunteers");
+
         }
 
         public RedirectToActionResult Delete(int id)
@@ -118,16 +143,64 @@ namespace PreSemester_Project.Controllers
             return RedirectToAction("ManageVolunteers");
         }
 
-        //Search is Currently a WIP
         [HttpGet]
         public ActionResult Search(string key)
         {
 
             IEnumerable<Volunteer> results = _volunteerRepository.Search(key);
 
-            ViewData.Model = results;
-            return View("SearchResults");
+            if (results.Any())
+            {
+                ViewData.Model = results;
+
+                return View("SearchResults");
+            }
+            else
+            {
+                TempData["error"] = "Volunteer not Found: Please recheck your spelling.";
+                ViewData.Model = _volunteerRepository.GetAllVolunteers();
+                return View("ManageVolunteers");
+            }
+
         }
+
+        public ActionResult SearchResults()
+        {
+            ViewData.Model = TempData["Results"] as IEnumerable<Volunteer>;
+
+            return View();
+        }
+
+        [HttpGet]
+        public ActionResult Filter(string approvalStatus)
+        {
+            List<Volunteer> results = new List<Volunteer>();
+            if (approvalStatus != "All" && approvalStatus != "Approved/Pending Approval")
+            {
+                results = _volunteerRepository.FilterApprovalStatus(approvalStatus);
+                ViewData.Model = results.AsEnumerable();
+
+            }
+            else if (approvalStatus == "Approved/Pending Approval")
+            {
+                results = _volunteerRepository.FilterApprovalStatus("Approved");
+                results.AddRange(_volunteerRepository.FilterApprovalStatus("Pending Approval"));
+
+                ViewData.Model = results.AsEnumerable();
+                ViewData["error"] = "Here";
+            }
+            else
+            {
+                ViewData.Model = _volunteerRepository.GetAllVolunteers();
+            }
+
+            TempData["filteredBy"] = "Filtered by " + approvalStatus + ".";
+
+            return View("ManageVolunteers");
+        }
+
+
+
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -135,4 +208,5 @@ namespace PreSemester_Project.Controllers
             return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
         }
     }
-} 
+}
+

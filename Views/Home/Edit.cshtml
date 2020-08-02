@@ -12,63 +12,68 @@
     <div class="col-md-4">
         <form asp-action="Edit">
             <div asp-validation-summary="ModelOnly" class="text-danger"></div>
-                <input type="hidden" asp-for="@Model.id" class="form-control" />
+            <input type="hidden" asp-for="@Model.id" class="form-control" />
 
             <div class="form-group">
                 <label asp-for="FirstName" class="control-label"></label>
-                <input asp-for="FirstName" class="form-control" value="@Model.FirstName"/>
+                <input asp-for="FirstName" class="form-control" value="@Model.FirstName" />
                 <span asp-validation-for="FirstName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="LastName" class="control-label"></label>
-                <input asp-for="LastName" class="form-control" value="@Model.LastName"/>
+                <input asp-for="LastName" class="form-control" value="@Model.LastName" />
                 <span asp-validation-for="LastName" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Username" class="control-label"></label>
-                <input asp-for="Username" class="form-control" value="@Model.Username"/>
+                <input asp-for="Username" class="form-control" value="@Model.Username" />
                 <span asp-validation-for="Username" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="Password" class="control-label"></label>
-                <input asp-for="Password" class="form-control" value="@Model.Password"/>
+                <input asp-for="Password" class="form-control" value="@Model.Password" />
                 <span asp-validation-for="Password" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="StreetAddress" class="control-label"></label>
-                <input asp-for="StreetAddress" class="form-control" value="@Model.StreetAddress"/>
+                <input asp-for="StreetAddress" class="form-control" value="@Model.StreetAddress" />
                 <span asp-validation-for="StreetAddress" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="City" class="control-label"></label>
-                <input asp-for="City" class="form-control" value="@Model.City"/>
+                <input asp-for="City" class="form-control" value="@Model.City" />
                 <span asp-validation-for="City" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="State" class="control-label"></label>
-                <input asp-for="State" class="form-control" value="@Model.State"/>
+                <input asp-for="State" class="form-control" value="@Model.State" />
                 <span asp-validation-for="State" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ZipCode" class="control-label"></label>
-                <input asp-for="ZipCode" class="form-control" value="@Model.ZipCode"/>
+                <input asp-for="ZipCode" class="form-control" value="@Model.ZipCode" />
                 <span asp-validation-for="ZipCode" class="text-danger"></span>
             </div>
             <div class="form-group">
                 <label asp-for="ApprovalStatus" class="control-label"></label>
-                <input asp-for="ApprovalStatus" class="form-control" value="@Model.ApprovalStatus"/>
-                <span asp-validation-for="ApprovalStatus" class="text-danger"></span>
+                <select asp-for="ApprovalStatus" class="form-control" value="@Model.ApprovalStatus">
+                    <option value="Approved">Approved</option>
+                    <option value="Pending Approval">Pending Approval</option>
+                    <option value="Disapproved">Disapproved</option>
+                    <option value="Inactive">Inactive</option>
+                    <option value="All">All</option>
+                </select>
             </div>
             <div class="form-group">
                 <input type="submit" value="Save" class="btn btn-primary" />
-                <input type="reset" value="Cancel" class="btn btn-primary" asp-action="ManageVolunteers"/>
+                <input type="submit" value="Cancel" class="btn btn-primary" formaction="CancelVolunteer" style="float:right" />
             </div>
         </form>
     </div>
 </div>
 
 <div>
-    <a asp-action="Landing">Back to List</a>
+    <a asp-action="ManageVolunteers">Back to List</a>
 </div>
 
 @section Scripts {

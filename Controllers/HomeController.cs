@@ -9,6 +9,7 @@ using Microsoft.Extensions.Logging;
 using System.Net.Http;
 using PreSemester_Project.Models;
 using Microsoft.AspNetCore.Http;
+using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace PreSemester_Project.Controllers
 {
@@ -29,15 +30,18 @@ namespace PreSemester_Project.Controllers
          */
 
         private readonly IVolunteerRepository _volunteerRepository;
-        
+
+        private readonly IOpportunityRepository _opportunityRepository;
+
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger, IVolunteerRepository volunteerRepository)
+        public HomeController(ILogger<HomeController> logger, IVolunteerRepository volunteerRepository, IOpportunityRepository opportunityRepository)
         {
             _logger = logger;
             _volunteerRepository = volunteerRepository;
+            _opportunityRepository = opportunityRepository;
         }
-        
+
         public IActionResult Index()
         {
             return View();
@@ -48,7 +52,7 @@ namespace PreSemester_Project.Controllers
         {
             // LOGIN FORM VALIDATION IS WORKING...
             // WILL UNCOMMENT TOWARDS END OF PROJECT
-            return RedirectToAction("ManageVolunteers");
+            return RedirectToAction("Options");
 
             ///// taking in login form from index.cshtml and gathering variables
             //string username = (Form["UserName"].ToString());
@@ -83,19 +87,16 @@ namespace PreSemester_Project.Controllers
         }
 
         [HttpPost]
-        public IActionResult Opportunities()
+        public RedirectToActionResult Opportunities()
         {
-            return View("Index");
+            return RedirectToAction("ManageOpportunities");
 
         }
 
-        [HttpPost]
-        public IActionResult CancelVolunteer()
-        {
-            IEnumerable<Volunteer> volList = _volunteerRepository.GetAllVolunteers();
-            ViewData.Model = volList;
-            return View("ManageVolunteers");
-        }
+        /// *************************************************************************************************************************///
+        /// ********************************************Beginning of Volunteer Methods***********************************************///
+        /// *************************************************************************************************************************///
+
         public ActionResult ManageVolunteers()
         {
             IEnumerable<Volunteer> volList = _volunteerRepository.GetAllVolunteers();
@@ -113,10 +114,10 @@ namespace PreSemester_Project.Controllers
         [HttpPost]
         public RedirectToActionResult Create(Volunteer newVol)
         {
-
             _volunteerRepository.Add(newVol);
-            return RedirectToAction("ManageVolunteers");
 
+
+            return RedirectToAction("ManageVolunteers");
         }
 
         public RedirectToActionResult Delete(int id)
@@ -179,7 +180,7 @@ namespace PreSemester_Project.Controllers
             {
                 results = _volunteerRepository.FilterApprovalStatus(approvalStatus);
                 ViewData.Model = results.AsEnumerable();
-
+                
             }
             else if (approvalStatus == "Approved/Pending Approval")
             {
@@ -199,8 +200,62 @@ namespace PreSemester_Project.Controllers
             return View("ManageVolunteers");
         }
 
+        /// *************************************************************************************************************************///
+        /// ********************************************End of Volunteer Methods*****************************************************///
+        /// *************************************************************************************************************************///
 
+        /// *************************************************************************************************************************///
+        /// ********************************************Beginning of Opportunity Methods*********************************************///
+        /// *************************************************************************************************************************///
+        //working
+        public ActionResult ManageOpportunities()
+        {
+            IEnumerable<Opportunity> oppList = _opportunityRepository.GetAllOpportunities();
 
+            ViewData.Model = oppList;
+
+            return View();
+        }
+        //working
+        public ActionResult CreateOpportunities()
+        {
+            return View();
+        }
+        //working
+        [HttpPost]
+        public RedirectToActionResult CreateOpportunities(Opportunity opportunity) 
+        {
+            _opportunityRepository.Add(opportunity);
+            return RedirectToAction("ManageOpportunities");
+        }
+        //working
+        [HttpGet]
+        public RedirectToActionResult DeleteOpportunity (int id)
+        {
+            Opportunity deleted = _opportunityRepository.Delete(id);
+            TempData["MethodResult"] = deleted.id + " was removed.";
+            return RedirectToAction("ManageOpportunities");
+        }
+        //work in Progress
+        [HttpGet]
+        public ActionResult EditOpportunity(int id)
+        {
+            Opportunity toBeChanged = _opportunityRepository.GetOpportunity(id);
+            ViewData.Model = toBeChanged;
+
+            return View();
+        }
+        //work inn Progress
+        [HttpPost]
+        public RedirectToActionResult EditOpportunity(Opportunity opportunityChanges)
+        {
+            _opportunityRepository.Edit(opportunityChanges);
+            return RedirectToAction("ManageOpportunities");
+        }
+
+        /// *************************************************************************************************************************///
+        /// ********************************************End of Opportunity Methods*****************************************************///
+        /// *************************************************************************************************************************///
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
@@ -209,4 +264,3 @@ namespace PreSemester_Project.Controllers
         }
     }
 }
-

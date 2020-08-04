@@ -15,7 +15,7 @@ namespace PreSemester_Project.Models
             _volunteerList = new List<Volunteer>()
             {
                 new Volunteer {id = 1, FirstName = "Bob", LastName = "Evans", Username = "BEvans", Password= "1991", StreetAddress = "1995 StreetName Ave", State = "FL", City = "Jacksonville", ZipCode = 32225, ApprovalStatus = "Approved"},
-                new Volunteer {id = 2, FirstName = "Jim", LastName = "Evans", Username = "JEvans", Password= "1992", StreetAddress = "1995 StreetName Ave", State = "FL", City = "Jacksonville", ZipCode = 32225, ApprovalStatus = "Approved"}
+                new Volunteer {id = 2, FirstName = "Jim", LastName = "Evans", Username = "JEvans", Password= "1992", StreetAddress = "1995 StreetName Ave", State = "FL", City = "Jacksonville", ZipCode = 32225, ApprovalStatus = "Pending Approval"}
             };
         }
 
@@ -32,30 +32,14 @@ namespace PreSemester_Project.Models
 
             if(toBeUpdated!= null)
             {
-                 toBeUpdated.FirstName = volunteerChanges.FirstName;
+                toBeUpdated.FirstName = volunteerChanges.FirstName;
                 toBeUpdated.LastName= volunteerChanges.LastName;
                 toBeUpdated.Username= volunteerChanges.Username;
                 toBeUpdated.Password = volunteerChanges.Password;
-                toBeUpdated.CenterPreferences = volunteerChanges.CenterPreferences;
-                toBeUpdated.Skills = volunteerChanges.Skills;
-                toBeUpdated.Availablity = volunteerChanges.Availablity;
                 toBeUpdated.StreetAddress = volunteerChanges.StreetAddress;
                 toBeUpdated.City = volunteerChanges.City;
                 toBeUpdated.State = volunteerChanges.State;
                 toBeUpdated.ZipCode = volunteerChanges.ZipCode;
-                toBeUpdated.HomePhone = volunteerChanges.HomePhone;
-                toBeUpdated.CellPhone = volunteerChanges.CellPhone;
-                toBeUpdated.WorkPhone = volunteerChanges.WorkPhone;
-                toBeUpdated.Email = volunteerChanges.Email;
-                toBeUpdated.EducationalBackground = volunteerChanges.EducationalBackground;
-                toBeUpdated.CurrentLicenses = volunteerChanges.CurrentLicenses;
-                toBeUpdated.EmergencyContactName = volunteerChanges.EmergencyContactName;
-                toBeUpdated.EmergencyContactHomePhone = volunteerChanges.EmergencyContactHomePhone;
-                toBeUpdated.EmergencyContactWorkPhone = volunteerChanges.EmergencyContactWorkPhone;
-                toBeUpdated.EmergencyContactEmail = volunteerChanges.EmergencyContactEmail;
-                toBeUpdated.EmergencyContactAddress = volunteerChanges.EmergencyContactAddress;
-                toBeUpdated.DriversLicense = volunteerChanges.DriversLicense;
-                toBeUpdated.SocialSecurity = volunteerChanges.SocialSecurity;
                 toBeUpdated.ApprovalStatus = volunteerChanges.ApprovalStatus;
             }
 
@@ -82,14 +66,12 @@ namespace PreSemester_Project.Models
             return toBeRemoved;
         }
 
-        //Currently A WIP
         public IEnumerable<Volunteer> Search(string key)
         {
-            IEnumerable<Volunteer> searchResults = _volunteerList.Where(v => v.FirstName.Contains(key)
-
-                                                                        || v.LastName.Contains(key)
-                                                                        || v.Username.Contains(key)
-                                                                        || (v.FirstName + " " + v.LastName).Contains(key));
+            IEnumerable<Volunteer> searchResults = _volunteerList.Where(v => v.FirstName.ToLower().Contains(key.ToLower())
+                                                                        || v.LastName.ToLower().Contains(key.ToLower()) 
+                                                                        || v.Username.ToLower().Contains(key.ToLower())
+                                                                        || (v.FirstName + " " + v.LastName).ToLower().Contains(key.ToLower()));
 
             return searchResults;
         }

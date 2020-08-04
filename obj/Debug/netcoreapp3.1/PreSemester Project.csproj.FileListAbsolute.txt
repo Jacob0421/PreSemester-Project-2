@@ -248,7 +248,6 @@ C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\Razor\V
 C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\Razor\Views\Home\Edit.cshtml.g.cs
 C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\Razor\Views\Home\Index.cshtml.g.cs
 C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\Razor\Views\Home\ManageVolunteers.cshtml.g.cs
-C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\Razor\Views\Home\Privacy.cshtml.g.cs
 C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\Razor\Views\Home\SearchResults.cshtml.g.cs
 C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\Razor\Views\Shared\Error.cshtml.g.cs
 C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\Razor\Views\Shared\_Layout.cshtml.g.cs
@@ -264,3 +263,7 @@ C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\staticw
 C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\PreSemester Project.dll
 C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\PreSemester Project.pdb
 C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\PreSemester Project.genruntimeconfig.cache
+C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\Razor\Views\Home\ManageOpportunities.cshtml.g.cs
+C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\Razor\Views\Home\Options.cshtml.g.cs
+C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\Razor\Views\Home\CreateOpportunities.cshtml.g.cs
+C:\Users\Jacob\Github\PreSemester Project Lowkey\obj\Debug\netcoreapp3.1\Razor\Views\Home\EditOpportunity.cshtml.g.cs

@@ -26,6 +26,7 @@ namespace PreSemester_Project
         {
             services.AddControllersWithViews();
             services.AddSingleton<IVolunteerRepository, VolunteerRepository>();
+            services.AddSingleton<IOpportunityRepository, OpportunityRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

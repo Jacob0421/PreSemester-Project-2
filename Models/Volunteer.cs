@@ -10,9 +10,11 @@ namespace PreSemester_Project.Models
         [HiddenInput]
         public int id { get; set; }
         [Required]
-       public string FirstName { get; set; }
+        [Display(Name = "First Name")]
+        public string FirstName { get; set; }
 
         [Required]
+        [Display(Name = "Last Name")]
         public string LastName { get; set; }
         [Required]
         public string Username { get; set; }
@@ -20,12 +22,15 @@ namespace PreSemester_Project.Models
         [DataType(DataType.Password)]
         public string Password { get; set; }
 
-        //public string CenterPreferences { get; set; }
+        [Display(Name = "Center Preferences")]
+        public string CenterPreferences { get; set; }
 
-        //public string Skills { get; set; }
+        public string Skills { get; set; }
 
-        //public string Availablity { get; set; }
+        public string Availablity { get; set; }
+
         [Required]
+        [Display(Name = "Street Address")]
         public string StreetAddress { get; set; }
         [Required]
         public string City { get; set; }
@@ -35,32 +40,54 @@ namespace PreSemester_Project.Models
         [Display(Name="Zip Code")]
         public int ZipCode { get; set; }
 
-        //public string HomePhone { get; set; }
+        [Display(Name = "Home Phone")]
+        [StringLength(12, ErrorMessage = "Phone numbers cannot exceed 12 characters.")]
+        public string HomePhone { get; set; }
 
-        //public string CellPhone { get; set; }
+        [Display(Name = "Cell Phone")]
+        [StringLength(12, ErrorMessage = "Phone numbers cannot exceed 12 characters.")]
+        public string CellPhone { get; set; }
 
-        //public string WorkPhone { get; set; }
+        [Display(Name = "Work Phone")]
+        [StringLength(12, ErrorMessage = "Phone numbers cannot exceed 12 characters.")]
+        public string WorkPhone { get; set; }
 
-        //public string Email { get; set; } //Shoud we add a regular expression for validation purposes?
+        [RegularExpression(@"^[a-zA-Z0-9.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", ErrorMessage = "Invalid email format")]
+        public string Email { get; set; } 
 
-        //public string EducationalBackground { get; set; }
+        [Display(Name = "Educational Background")]
+        public string EducationalBackground { get; set; }
 
-        //public string CurrentLicenses { get; set; }
+        [Display(Name = "Current Licenses")]
+        public string CurrentLicenses { get; set; }
 
-        //public string EmergencyContactName { get; set; }
+        [Display(Name = "Emergency Contact Name")]
+        public string EmergencyContactName { get; set; }
 
-        //public string EmergencyContactHomePhone { get; set; }
+        [Display(Name = "Emergency Contact Home Phone")]
+        [StringLength(12, ErrorMessage = "Phone numbers cannot exceed 12 characters.")]
+        public string EmergencyContactHomePhone { get; set; }
 
-        //public string EmergencyContactWorkPhone { get; set; }
+        [Display(Name = "Emergency Contact Work Phone")]
+        [StringLength(12, ErrorMessage = "Phone numbers cannot exceed 12 characters.")]
+        public string EmergencyContactWorkPhone { get; set; }
 
-        //public string EmergencyContactEmail { get; set; }
+        [Display(Name = "Emergency Contact Email")]
+        [RegularExpression(@"^[a-zA-Z0-9.+-]+@[a-zA-Z0-9-]+\.[a-zA-Z0-9-.]+$", ErrorMessage = "Invalid email format")]
+        public string EmergencyContactEmail { get; set; }
 
-        //public string EmergencyContactAddress { get; set; }
+        [Display(Name = "Emergency Contact Address")]
+        public string EmergencyContactAddress { get; set; }
 
-        //public string DriversLicense { get; set; }
+        [Display(Name = "Drivers License")]
+        public string DriversLicense { get; set; }
 
-        //public string SocialSecurity { get; set; }
+        [Display(Name = "Social Security Number")]
+        [StringLength(11, ErrorMessage = "Social security numbers cannot exceed 11 characters.")]
+        public string SocialSecurity { get; set; }
         [Required]
+        [Display(Name = "Approval Status")]
         public string ApprovalStatus { get; set; }
+        
     }
 }

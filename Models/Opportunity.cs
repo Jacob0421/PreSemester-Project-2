@@ -14,7 +14,10 @@ namespace PreSemester_Project.Models
 
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime datePosted { get; set; }
-        //public List<string> centers { get; set; }
+        
+        [Display(Name = "Center Name")]
+        public string center { get; set; }
+       
         //public List<string> addresses { get; set; }
         [Required]
         public DateTime TimeOfEvent { get; set; }

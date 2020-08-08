@@ -19,8 +19,9 @@ namespace PreSemester_Project.Models
 
             _opportunityList = new List<Opportunity>()
             {
-                new Opportunity {id = 1, title="Bubba's Hullabaloo", datePosted = datePosted1, TimeOfEvent = timeOfEvent1, description="Bubba's Throwin' a good ole fashioned Hullabaloo. Come one over to get the best darn ribs on this side of the Mississippi."},
-                new Opportunity {id = 2, title="Frankenstein's Phantom Freakout", datePosted = datePosted2, TimeOfEvent = timeOfEvent2, description="Brains?"}
+                new Opportunity {id = 1, title="Bubba's Hullabaloo", datePosted = datePosted1, center = "Wolfson's Children Hospital", TimeOfEvent = timeOfEvent1, description="Bubba's Throwin' a good ole fashioned Hullabaloo. Come one over to get the best darn ribs on this side of the Mississippi."},
+                new Opportunity {id = 2, title="Frankenstein's Phantom Freakout", datePosted = datePosted2, center = "MOCA Jacksonville", TimeOfEvent = timeOfEvent2, description="Brains?"}
+
             };
         }
 

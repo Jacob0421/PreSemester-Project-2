@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "khrvOCFni4/m5yrbw7AySVXIEfTRRFys3O/hIwa6NYtlUzn1l6d80Sgv+K/hB5erosaqVcL6vNP2km+kC4lQAA==",
+  "dgSpecHash": "8LBWyP7dP1hLqpR7wthxU0t5JS+Iio9uc4dfThsrJDe2xnXQoG1AWer58Em53X7Ye6+HOXkZ5ja3kNKuJ8PMcw==",
   "success": true,
-  "projectFilePath": "D:\\Senior Project\\Pre-Semester-Project2\\PreSemester Project.csproj",
+  "projectFilePath": "D:\\Senior Project\\PreSemester-Project2\\PreSemester Project.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\gabri\\.nuget\\packages\\microsoft.aspnetcore.html.abstractions\\2.2.0\\microsoft.aspnetcore.html.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\gabri\\.nuget\\packages\\microsoft.aspnetcore.razor\\2.2.0\\microsoft.aspnetcore.razor.2.2.0.nupkg.sha512",

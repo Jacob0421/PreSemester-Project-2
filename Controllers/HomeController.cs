@@ -120,6 +120,52 @@ namespace PreSemester_Project.Controllers
             return RedirectToAction("ManageVolunteers");
         }
 
+        /*********************************************************STILL WORKING ON BELOW**********************************************************/
+        [HttpGet]
+        public ActionResult OpportunityMatches(int id)
+        {
+            Volunteer findVolOpp = _volunteerRepository.GetVolunteer(id);
+            ViewData.Model = findVolOpp;
+
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult OpportunityMatches(Volunteer findVolOpp)
+        {
+            List<Volunteer> volunteer = new List<Volunteer>();
+            List<Opportunity> results = new List<Opportunity>();
+            IEnumerable<Opportunity> oppList = _opportunityRepository.GetAllOpportunities();
+
+            foreach (Opportunity opp in oppList)
+            {
+                if (opp.center == findVolOpp.CenterPreferences)
+                {
+                    results.Add(opp);
+                    volunteer.Add(findVolOpp);
+                }
+                else
+                {
+                    volunteer.Add(findVolOpp);
+                }
+            }
+
+            if (results.Count == 0)
+            {
+                ViewBag.Message("We could not find any opportunities matches.");
+                return View("ManageVolunteers");
+            }
+            else
+            {
+                ViewData.Model = results;
+                ViewData.Model = volunteer;
+                return View("OpportunityMatches");
+            }
+
+
+        }
+        /*********************************************************STILL WORKING ON ABOVE**********************************************************/
+
         public RedirectToActionResult Delete(int id)
         {
             _volunteerRepository.Delete(id);
@@ -208,6 +254,15 @@ namespace PreSemester_Project.Controllers
         /// ********************************************Beginning of Opportunity Methods*********************************************///
         /// *************************************************************************************************************************///
         //working
+
+        public IActionResult CancelOpportunity()
+        {
+            IEnumerable<Opportunity> oppList = _opportunityRepository.GetAllOpportunities();
+
+            ViewData.Model = oppList;
+
+            return View("ManageOpportunities");
+        }
         public ActionResult ManageOpportunities()
         {
             IEnumerable<Opportunity> oppList = _opportunityRepository.GetAllOpportunities();

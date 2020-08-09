@@ -4,10 +4,10 @@
     ViewData["Title"] = "ManageOpportunities";
 }
 
-<h1>ManageOpportunities</h1>
+<h1>Manage Opportunities</h1>
 <p class="text-warning">@TempData["MethodResult"]</p>
 <p>
-    <a asp-action="CreateOpportunities">Create New</a>
+    <a asp-action="CreateOpportunities">Create New Opportunity</a>
 </p>
 <table class="table">
     <thead>
@@ -39,7 +39,8 @@
             <td>
                 @Html.ActionLink("Edit", "EditOpportunity", new { id = item.id }) |
                 @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "DeleteOpportunity", new { id = item.id })
+                @Html.ActionLink("Delete", "DeleteOpportunity", new { id = item.id }) |
+                @Html.ActionLink("Volunteer Matches", "VolunteerMatches", new { id = item.id })
             </td>
         </tr>
 }

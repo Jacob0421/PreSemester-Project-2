@@ -504,3 +504,4 @@ D:\Senior Project\PreSemester-Project2\obj\Debug\netcoreapp3.1\staticwebassets\P
 D:\Senior Project\PreSemester-Project2\obj\Debug\netcoreapp3.1\PreSemester Project.dll
 D:\Senior Project\PreSemester-Project2\obj\Debug\netcoreapp3.1\PreSemester Project.pdb
 D:\Senior Project\PreSemester-Project2\obj\Debug\netcoreapp3.1\PreSemester Project.genruntimeconfig.cache
+D:\Senior Project\PreSemester-Project2\obj\Debug\netcoreapp3.1\Razor\Views\Home\VolunteerMatches.cshtml.g.cs

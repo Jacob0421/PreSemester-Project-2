@@ -93,6 +93,7 @@ namespace PreSemester_Project.Controllers
 
         }
 
+
         /// *************************************************************************************************************************///
         /// ********************************************Beginning of Volunteer Methods***********************************************///
         /// *************************************************************************************************************************///
@@ -120,20 +121,11 @@ namespace PreSemester_Project.Controllers
             return RedirectToAction("ManageVolunteers");
         }
 
-        /*********************************************************STILL WORKING ON BELOW**********************************************************/
+       
         [HttpGet]
         public ActionResult OpportunityMatches(int id)
         {
             Volunteer findVolOpp = _volunteerRepository.GetVolunteer(id);
-            ViewData.Model = findVolOpp;
-
-            return View();
-        }
-
-        [HttpPost]
-        public ActionResult OpportunityMatches(Volunteer findVolOpp)
-        {
-            List<Volunteer> volunteer = new List<Volunteer>();
             List<Opportunity> results = new List<Opportunity>();
             IEnumerable<Opportunity> oppList = _opportunityRepository.GetAllOpportunities();
 
@@ -142,34 +134,33 @@ namespace PreSemester_Project.Controllers
                 if (opp.center == findVolOpp.CenterPreferences)
                 {
                     results.Add(opp);
-                    volunteer.Add(findVolOpp);
+                   
                 }
                 else
                 {
-                    volunteer.Add(findVolOpp);
+
                 }
             }
 
             if (results.Count == 0)
             {
-                ViewBag.Message("We could not find any opportunities matches.");
-                return View("ManageVolunteers");
+                TempData["error"] = "Opportunity match not found.";
+                return RedirectToAction("ManageVolunteers");
             }
             else
             {
-                ViewData.Model = results;
-                ViewData.Model = volunteer;
-                return View("OpportunityMatches");
+                
+                var finalResults = new OpportunityMatchesView { _volunteer = findVolOpp, _opportunityList = results };
+                return View(finalResults);
             }
-
-
         }
-        /*********************************************************STILL WORKING ON ABOVE**********************************************************/
 
+       
         public RedirectToActionResult Delete(int id)
         {
-            _volunteerRepository.Delete(id);
-
+           
+           Volunteer vol =  _volunteerRepository.Delete(id);
+            TempData["deleted"] = vol.FirstName + " " + vol.LastName + " has been deleted.";
             return RedirectToAction("ManageVolunteers");
         }
 
@@ -226,7 +217,7 @@ namespace PreSemester_Project.Controllers
             {
                 results = _volunteerRepository.FilterApprovalStatus(approvalStatus);
                 ViewData.Model = results.AsEnumerable();
-                
+                TempData["filteredBy"] = "Filtered by " + approvalStatus + ".";
             }
             else if (approvalStatus == "Approved/Pending Approval")
             {
@@ -234,15 +225,23 @@ namespace PreSemester_Project.Controllers
                 results.AddRange(_volunteerRepository.FilterApprovalStatus("Pending Approval"));
 
                 ViewData.Model = results.AsEnumerable();
-                ViewData["error"] = "Here";
+                TempData["filteredBy"] = "Filtered by " + approvalStatus + ".";
             }
             else
             {
                 ViewData.Model = _volunteerRepository.GetAllVolunteers();
             }
 
-            TempData["filteredBy"] = "Filtered by " + approvalStatus + ".";
+            TempData["filteredBy"] = "There are no volunteers that match your filtering criteria.";
 
+            return View("ManageVolunteers");
+        }
+
+        [HttpPost]
+        public IActionResult CancelVolunteer()
+        {
+            IEnumerable<Volunteer> volList = _volunteerRepository.GetAllVolunteers();
+            ViewData.Model = volList;
             return View("ManageVolunteers");
         }
 
@@ -284,14 +283,14 @@ namespace PreSemester_Project.Controllers
             return RedirectToAction("ManageOpportunities");
         }
         //working
-        [HttpGet]
+      
         public RedirectToActionResult DeleteOpportunity (int id)
         {
             Opportunity deleted = _opportunityRepository.Delete(id);
-            TempData["MethodResult"] = deleted.id + " was removed.";
+            TempData["MethodResult"] = deleted.title + " was removed.";
             return RedirectToAction("ManageOpportunities");
         }
-        //work in Progress
+        //working
         [HttpGet]
         public ActionResult EditOpportunity(int id)
         {
@@ -300,7 +299,7 @@ namespace PreSemester_Project.Controllers
 
             return View();
         }
-        //work inn Progress
+        //working
         [HttpPost]
         public RedirectToActionResult EditOpportunity(Opportunity opportunityChanges)
         {
@@ -308,6 +307,38 @@ namespace PreSemester_Project.Controllers
             return RedirectToAction("ManageOpportunities");
         }
 
+        [HttpGet]
+        public ActionResult VolunteerMatches(int id)
+        {
+            Opportunity findopp = _opportunityRepository.GetOpportunity(id);
+            List<Volunteer> results = new List<Volunteer>();
+            IEnumerable<Volunteer> volList = _volunteerRepository.GetAllVolunteers();
+
+            foreach (Volunteer vol in volList)
+            {
+                if (vol.CenterPreferences == findopp.center)
+                {
+                    results.Add(vol);
+
+                }
+                else
+                {
+
+                }
+            }
+
+            if (results.Count == 0)
+            {
+                TempData["error"] = "Volunteer match not found.";
+                return RedirectToAction("ManageOpportunities");
+            }
+            else
+            {
+
+                var finalResults = new VolunteerMatchesView { opportunity = findopp, _volunteerList = results };
+                return View(finalResults);
+            }
+        }
         /// *************************************************************************************************************************///
         /// ********************************************End of Opportunity Methods*****************************************************///
         /// *************************************************************************************************************************///

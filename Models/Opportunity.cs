@@ -10,18 +10,25 @@ namespace PreSemester_Project.Models
     {
         public int id { get; set; }
         [Required]
+        [Display(Name = "Title")]
         public string title { get; set; }
 
+        [Display(Name = "Date Posted")]
         [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
         public DateTime datePosted { get; set; }
         
         [Display(Name = "Center Name")]
         public string center { get; set; }
-       
-        //public List<string> addresses { get; set; }
+
+        [Display(Name = "Address")]
+        public string address { get; set; }
+        
         [Required]
+        [Display(Name = "Time of Event")]
         public DateTime TimeOfEvent { get; set; }
+        
         [Required]
+        [Display(Name = "Description")]
         public string description { get; set; }
 
     }

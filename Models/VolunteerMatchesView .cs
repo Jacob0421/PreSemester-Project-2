@@ -5,10 +5,10 @@ using System.Threading.Tasks;
 
 namespace PreSemester_Project.Models
 {
-    public class OpportunityMatchesView
+    public class VolunteerMatchesView
     {
-        public Volunteer _volunteer { get; set; }
+        public List<Volunteer> _volunteerList { get; set; }
 
-        public List<Opportunity> _opportunityList { get; set; }
+        public Opportunity opportunity { get; set; }
     }
 }

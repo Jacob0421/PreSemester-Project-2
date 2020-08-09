@@ -4,9 +4,9 @@
     ViewData["Title"] = "EditOpportunity";
 }
 
-<h1>EditOpportunity</h1>
+<h1>Edit Opportunity</h1>
 
-<h4>Opportunity</h4>
+
 <hr />
 <div class="row">
     <div class="col-md-4">
@@ -20,11 +20,25 @@
                 <input asp-for="title" class="form-control" value="@Model.title" />
                 <span asp-validation-for="title" class="text-danger"></span>
             </div>
-
+            <div class="form-group">
+                <label asp-for="datePosted" class="control-label"></label>
+                <input asp-for="datePosted" class="form-control" value="@Model.datePosted" />
+                <span asp-validation-for="datePosted" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="center" class="control-label"></label>
+                <input asp-for="center" class="form-control" value="@Model.center"/>
+                <span asp-validation-for="center" class="text-danger"></span>
+            </div>
+            <div class="form-group">
+                <label asp-for="address" class="control-label"></label>
+                <input asp-for="address" class="form-control" value="@Model.address"/>
+                <span asp-validation-for="address" class="text-danger"></span>
+            </div>
             @*Currently not displaying the time in the page*@
             <div class="form-group">
                 <label asp-for="TimeOfEvent" class="control-label"></label>
-                <input asp-for="TimeOfEvent" class="form-control" value="@Model.TimeOfEvent"/>
+                <input asp-for="TimeOfEvent" class="form-control" value="@Model.TimeOfEvent" />
                 <span asp-validation-for="TimeOfEvent" class="text-danger"></span>
             </div>
             <div class="form-group">

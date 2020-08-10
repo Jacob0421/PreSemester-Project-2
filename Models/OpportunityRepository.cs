@@ -91,5 +91,13 @@ namespace PreSemester_Project.Models
         {
             throw new NotImplementedException();
         }
+
+        public List<Opportunity> FilterCenter(string center)
+        {
+
+            List<Opportunity> results = _opportunityList.Where(o => o.center == center).ToList();
+
+            return results;
+        }
     }
 }

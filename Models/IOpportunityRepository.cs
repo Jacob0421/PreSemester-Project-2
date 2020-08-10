@@ -13,5 +13,6 @@ namespace PreSemester_Project.Models
         IEnumerable<Opportunity> GetAllOpportunities();
         IEnumerable<Opportunity> Search(string key);
         Opportunity GetOpportunity(int id);
+        List<Opportunity> FilterCenter(string center);
     }
 }

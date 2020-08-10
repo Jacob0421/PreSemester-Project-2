@@ -343,6 +343,40 @@ namespace PreSemester_Project.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult FilterCenter(string center)
+        {
+            List<Opportunity> results = new List<Opportunity>();
+            if (center == "Jacksonville Location")
+            {
+                results = _opportunityRepository.FilterCenter(center);
+                ViewData.Model = results.AsEnumerable();
+                TempData["filteredBy"] = "Filtered by " + center + ".";
+            }
+            else if (center == "Miami Location")
+            {
+                results = _opportunityRepository.FilterCenter(center);
+                ViewData.Model = results.AsEnumerable();
+                TempData["filteredBy"] = "Filtered by " + center + ".";
+            }
+            else if (center == "St. Petersburg Location")
+            {
+                results = _opportunityRepository.FilterCenter(center);
+                ViewData.Model = results.AsEnumerable();
+                TempData["filteredBy"] = "Filtered by " + center + ".";
+            }
+            else
+            {
+                ViewData.Model = _opportunityRepository.GetAllOpportunities();
+                TempData["filteredBy"] = "There are no volunteers that match your filtering criteria.";
+            }
+
+
+
+            return View("ManageOpportunities");
+        }
+
+
         //[HttpPost]
         public RedirectToActionResult FilterPosted()
         {

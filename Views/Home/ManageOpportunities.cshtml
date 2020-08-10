@@ -7,6 +7,7 @@
 <h1>Manage Opportunities</h1>
 <p class="text-warning">@TempData["MethodResult"]</p>
 <p class="text-warning">@TempData["filteredBy"]</p>
+<p class="text-warning">@TempData["error"]</p>
 <p>
     <a asp-action="CreateOpportunities">Create New Opportunity</a>
 </p>
@@ -30,7 +31,7 @@
                     <option value="Jacksonville Location">Jacksonville Location</option>
                     <option value="Miami Location">Miami Location</option>
                     <option value="St. Petersburg Location">St. Petersburg Location</option>
-                 </select>
+                </select>
             </td>
             <td>
                 <input type="submit" value="Filter" class="btn btn-primary" />
@@ -54,24 +55,25 @@
         </tr>
     </thead>
     <tbody>
-@foreach (var item in Model) {
-        <tr>
-            <td>
-                @Html.DisplayFor(modelItem => item.center)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.datePosted)
-            </td>
-            <td>
-                @Html.DisplayFor(modelItem => item.TimeOfEvent)
-            </td>
-            <td>
-                @Html.ActionLink("Edit", "EditOpportunity", new { id = item.id }) |
-                @Html.ActionLink("Details", "Details", new { id = item.id }) |
-                @Html.ActionLink("Delete", "DeleteOpportunity", new { id = item.id }) |
-                @Html.ActionLink("Volunteer Matches", "VolunteerMatches", new { id = item.id })
-            </td>
-        </tr>
-}
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>
+                    @Html.DisplayFor(modelItem => item.center)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.datePosted)
+                </td>
+                <td>
+                    @Html.DisplayFor(modelItem => item.TimeOfEvent)
+                </td>
+                <td>
+                    @Html.ActionLink("Edit", "EditOpportunity", new { id = item.id }) |
+                    @Html.ActionLink("Details", "Details", new { id = item.id }) |
+                    @Html.ActionLink("Delete", "DeleteOpportunity", new { id = item.id }) |
+                    @Html.ActionLink("Volunteer Matches", "VolunteerMatches", new { id = item.id })
+                </td>
+            </tr>
+        }
     </tbody>
 </table>

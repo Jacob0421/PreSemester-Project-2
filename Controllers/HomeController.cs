@@ -18,18 +18,7 @@ namespace PreSemester_Project.Controllers
     public class HomeController : Controller
     {
 
-        /*
-         * 
-         * Tentative process using the site
-         * 
-         * WILL UPDATE THIS AS WE MOVE ON IN THE PROJECT:
-         * 
-         * 1.) Index (Login page) -Done
-         * 2.) Login() (Login Validation) => Landing -Done
-         * 3.) Landing Page => Add_Volunteers => AddVolunteers() OR Landing Page => Search Results Page => Edit Page (Maybe pop-up) => Landing Page
-         * 
-         * 
-         */
+
 
         private readonly IVolunteerRepository _volunteerRepository;
 
@@ -66,7 +55,7 @@ namespace PreSemester_Project.Controllers
             //    //initializing session variables
             //    HttpContext.Session.SetString("Username", username);
             //    HttpContext.Session.SetString("Password", password);
-            //    return View("Landing");
+            //    return View("Options");
             //} 
             //else
             //{
@@ -368,7 +357,7 @@ namespace PreSemester_Project.Controllers
             else
             {
                 ViewData.Model = _opportunityRepository.GetAllOpportunities();
-                TempData["filteredBy"] = "There are no volunteers that match your filtering criteria.";
+                TempData["filteredBy"] = "There are no opportunities that match your filtering criteria.";
             }
 
 
@@ -397,9 +386,9 @@ namespace PreSemester_Project.Controllers
         }
 
         //[HttpPost]
-        public RedirectToActionResult FilterPosted()
+        public RedirectToActionResult FilterPosted(List<Opportunity> results)
         {
-            List<Opportunity> results = new List<Opportunity>();
+         /*   List<Opportunity> results = new List<Opportunity>();
             DateTime today = DateTime.Now.Date;
             //today.ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
             IEnumerable<Opportunity> oppList = _opportunityRepository.GetAllOpportunities();
@@ -421,11 +410,13 @@ namespace PreSemester_Project.Controllers
                    // days.Add(difference);
                     //TempData["MethodResult"] = difference;
                 }
-            }
+            }*/
             if (results.Count == 0)
             {
-                TempData["MethodResult"] = "There were no opportunitites posted within the past 60 days";
+                TempData["MethodResult"] = "There were no opportunitites posted within the past 60 days.";
+                return RedirectToAction("ManageOpportunities");
             }
+            ViewData.Model = results;
             return RedirectToAction("ManageOpportunities");
         }
         //working progress 

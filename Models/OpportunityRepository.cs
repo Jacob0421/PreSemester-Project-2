@@ -11,7 +11,7 @@ namespace PreSemester_Project.Models
 
         public OpportunityRepository()
         {
-           DateTime datePosted1 = new DateTime(2020, 3, 21);
+           DateTime datePosted1 = new DateTime(2020, 7, 21);
            DateTime datePosted2 = new DateTime(2019, 11, 19);
 
             DateTime timeOfEvent1 = new DateTime(2020, 8, 30, 13, 30, 0);

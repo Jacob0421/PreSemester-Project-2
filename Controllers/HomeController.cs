@@ -10,6 +10,8 @@ using System.Net.Http;
 using PreSemester_Project.Models;
 using Microsoft.AspNetCore.Http;
 using Microsoft.CodeAnalysis.CSharp.Syntax;
+using System.Security.Cryptography;
+using System.Globalization;
 
 namespace PreSemester_Project.Controllers
 {
@@ -230,9 +232,10 @@ namespace PreSemester_Project.Controllers
             else
             {
                 ViewData.Model = _volunteerRepository.GetAllVolunteers();
+                TempData["filteredBy"] = "There are no volunteers that match your filtering criteria.";
             }
 
-            TempData["filteredBy"] = "There are no volunteers that match your filtering criteria.";
+            
 
             return View("ManageVolunteers");
         }
@@ -339,6 +342,41 @@ namespace PreSemester_Project.Controllers
                 return View(finalResults);
             }
         }
+
+        //[HttpPost]
+        public RedirectToActionResult FilterPosted()
+        {
+            List<Opportunity> results = new List<Opportunity>();
+            DateTime today = DateTime.Now.Date;
+            //today.ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
+            IEnumerable<Opportunity> oppList = _opportunityRepository.GetAllOpportunities();
+            foreach (Opportunity opp in oppList)
+            {
+                DateTime posted = opp.datePosted.Date;
+                TimeSpan difference = today.Subtract(posted);
+                int daysDiff = difference.Days;
+                
+                if (daysDiff <= 60)
+                {
+                    results.Add(opp);
+                    ViewData.Model = results.AsEnumerable();
+                    
+                }
+                else
+                {
+                    //List<TimeSpan> days = new List<TimeSpan>();
+                   // days.Add(difference);
+                    //TempData["MethodResult"] = difference;
+                }
+            }
+            if (results.Count == 0)
+            {
+                TempData["MethodResult"] = "There were no opportunitites posted within the past 60 days";
+            }
+            return RedirectToAction("ManageOpportunities");
+        }
+        //working progress 
+
         /// *************************************************************************************************************************///
         /// ********************************************End of Opportunity Methods*****************************************************///
         /// *************************************************************************************************************************///

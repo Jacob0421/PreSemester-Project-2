@@ -14,7 +14,8 @@ namespace PreSemester_Project.Models
         public string title { get; set; }
 
         [Display(Name = "Date Posted")]
-        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}")]
+        [DataType(DataType.Date)]
+        [DisplayFormat(DataFormatString = "{0:MM/dd/yyyy}", ApplyFormatInEditMode = true) ]
         public DateTime datePosted { get; set; }
         
         [Display(Name = "Center Name")]

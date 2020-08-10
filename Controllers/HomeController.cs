@@ -376,6 +376,25 @@ namespace PreSemester_Project.Controllers
             return View("ManageOpportunities");
         }
 
+        [HttpGet]
+        public ActionResult SearchKeywords(string key)
+        {
+            IEnumerable<Opportunity> results = _opportunityRepository.SearchKeywords(key);
+            
+            if (results.Any())
+            {
+                ViewData.Model = results;
+
+                return View("OpportunitySearchResults");
+            }
+            else
+            {
+                TempData["error"] = "Opportunity not found.";
+                ViewData.Model = _opportunityRepository.GetAllOpportunities();
+                return View("ManageOpportunities");
+            }
+
+        }
 
         //[HttpPost]
         public RedirectToActionResult FilterPosted()

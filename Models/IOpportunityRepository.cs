@@ -11,7 +11,7 @@ namespace PreSemester_Project.Models
         Opportunity Delete(int id);
         Opportunity Edit(Opportunity opportunityChanges);
         IEnumerable<Opportunity> GetAllOpportunities();
-        IEnumerable<Opportunity> Search(string key);
+        IEnumerable<Opportunity> SearchKeywords(string key);
         Opportunity GetOpportunity(int id);
         List<Opportunity> FilterCenter(string center);
     }

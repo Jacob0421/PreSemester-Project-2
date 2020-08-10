@@ -40,7 +40,7 @@ namespace PreSemester_Project.Models
                 new Opportunity {id = 5, title="Clothing Drive", datePosted = datePosted5, center = "Miami Location", address = "550 NW 42nd Avenue, Miami, FL 33126", TimeOfEvent = timeOfEvent5, description="Collect and sort clothes that will be distrbuted to children in need."},
                 new Opportunity {id = 6, title="Valentines Day Party", datePosted = datePosted6, center = "St. Petersburg Location", address = "3190 Tyrone Blvd. N., St. Petersburg, FL, 33710", TimeOfEvent = timeOfEvent6, description="Exchange gifts, dance, and complete arts and crafts with kids in a group home."},
                 new Opportunity {id = 7, title="Valentines Day Gala", datePosted = datePosted7, center = "Jacksonville Location", address = "1000 Water St, Jacksonville, FL 32204", TimeOfEvent = timeOfEvent7, description="This Gala will raise money to buy presents and host events for children in group homes. As a volunteer you will be waiting tables or checking people in as they arrive."},
-                new Opportunity {id = 8, title="Christmas Party", datePosted = datePosted8, center = "Miami Location", address = "550 NW 42nd Avenue, Miami, FL 33126", TimeOfEvent = timeOfEvent8, description="Decorate cookies, make ornatments and give presents to kids in a group home."},
+                new Opportunity {id = 8, title="Christmas Party", datePosted = datePosted8, center = "Miami Location", address = "550 NW 42nd Avenue, Miami, FL 33126", TimeOfEvent = timeOfEvent8, description="Decorate cookies, make ornaments and give presents to kids in a group home."},
                 new Opportunity {id = 9, title="Food Drive", datePosted = datePosted9, center = "St. Petersburg Location", address = "401 5th St N, St Petersburg, FL", TimeOfEvent = timeOfEvent9, description="Collect non-perishable goods and sort them for further distribution."}
 
             };
@@ -87,9 +87,12 @@ namespace PreSemester_Project.Models
             return _opportunityList.FirstOrDefault(o => o.id == id); ;
         }
 
-        public IEnumerable<Opportunity> Search(string key)
+        public IEnumerable<Opportunity> SearchKeywords(string key)
         {
-            throw new NotImplementedException();
+            IEnumerable<Opportunity> searchResults = _opportunityList.Where(o => o.center.ToLower().Contains(key.ToLower()) || o.description.ToLower().Contains(key.ToLower()) || o.title.ToLower().Contains(key.ToLower()));
+
+            return searchResults;
+           
         }
 
         public List<Opportunity> FilterCenter(string center)

@@ -27,8 +27,11 @@
             </div>
             <div class="form-group">
                 <label asp-for="center" class="control-label"></label>
-                <input asp-for="center" class="form-control" value="@Model.center"/>
-                <span asp-validation-for="center" class="text-danger"></span>
+                <select asp-for="center" class="form-control" value="@Model.center" />
+                    <option value="Jacksonville Location">Jacksonville Location</option>
+                    <option value="Miami Location">Miami Location</option>
+                    <option value="St. Petersburg Location">St. Petersburg Location</option>
+                </select>
             </div>
             <div class="form-group">
                 <label asp-for="address" class="control-label"></label>

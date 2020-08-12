@@ -103,33 +103,5 @@ namespace PreSemester_Project.Models
             return results;
         }
 
-        public List<Opportunity> FilterPosted()
-        {
-            List<Opportunity> results = new List<Opportunity>();
-            DateTime today = DateTime.Now.Date;
-            //today.ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
-            List<Opportunity> oppList = _opportunityList;
-            foreach (Opportunity opp in oppList)
-            {
-                DateTime posted = opp.datePosted.Date;
-                TimeSpan difference = today.Subtract(posted);
-                int daysDiff = difference.Days;
-
-                if (daysDiff <= 60)
-                {
-                    results.Add(opp);
-                    
-
-                }
-                else
-                {
-                    //List<TimeSpan> days = new List<TimeSpan>();
-                    // days.Add(difference);
-                    //TempData["MethodResult"] = difference;
-                }
-            }
-
-            return results;
-        }
     }
 }

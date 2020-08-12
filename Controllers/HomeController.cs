@@ -145,8 +145,13 @@ namespace PreSemester_Project.Controllers
                 return View(finalResults);
             }
         }
+        [HttpGet]
+        public ActionResult Details(int id)
+        {
+            ViewData.Model = _volunteerRepository.GetVolunteer(id);
+            return View();
+        }
 
-       
         public RedirectToActionResult Delete(int id)
         {
            
@@ -244,7 +249,7 @@ namespace PreSemester_Project.Controllers
         /// *************************************************************************************************************************///
         /// ********************************************Beginning of Opportunity Methods*********************************************///
         /// *************************************************************************************************************************///
-        //working
+     
 
         public IActionResult CancelOpportunity()
         {
@@ -292,12 +297,13 @@ namespace PreSemester_Project.Controllers
             return View();
         }
         //working
+
         [HttpPost]
         public RedirectToActionResult EditOpportunity(Opportunity opportunityChanges)
         {
             _opportunityRepository.Edit(opportunityChanges);
             return RedirectToAction("ManageOpportunities");
-        }
+        }//working
 
         [HttpGet]
         public ActionResult VolunteerMatches(int id)
@@ -330,7 +336,7 @@ namespace PreSemester_Project.Controllers
                 var finalResults = new VolunteerMatchesView { opportunity = findopp, _volunteerList = results };
                 return View(finalResults);
             }
-        }
+        }//working
 
         [HttpGet]
         public ActionResult FilterCenter(string center)
@@ -354,6 +360,11 @@ namespace PreSemester_Project.Controllers
                 ViewData.Model = results.AsEnumerable();
                 TempData["filteredBy"] = "Filtered by " + center + ".";
             }
+            else if(center == "All")
+            {
+                ViewData.Model = _opportunityRepository.GetAllOpportunities();
+                TempData["filteredBy"] = "You are viewing all of the opportunities posted.";
+            }
             else
             {
                 ViewData.Model = _opportunityRepository.GetAllOpportunities();
@@ -363,7 +374,7 @@ namespace PreSemester_Project.Controllers
 
 
             return View("ManageOpportunities");
-        }
+        }//working
 
         [HttpGet]
         public ActionResult SearchKeywords(string key)
@@ -383,14 +394,19 @@ namespace PreSemester_Project.Controllers
                 return View("ManageOpportunities");
             }
 
-        }
+        }//working
 
-        //[HttpPost]
-        public RedirectToActionResult FilterPosted(List<Opportunity> results)
+        [HttpGet]
+        public ActionResult OpportunityDetails(int id)
         {
-         /*   List<Opportunity> results = new List<Opportunity>();
+            ViewData.Model = _opportunityRepository.GetOpportunity(id);
+            return View();
+        }//working
+
+        public ActionResult FilterPosted()
+        {
+            List<Opportunity> results = new List<Opportunity>();
             DateTime today = DateTime.Now.Date;
-            //today.ToString("MM/dd/yyyy", System.Globalization.CultureInfo.InvariantCulture);
             IEnumerable<Opportunity> oppList = _opportunityRepository.GetAllOpportunities();
             foreach (Opportunity opp in oppList)
             {
@@ -406,20 +422,19 @@ namespace PreSemester_Project.Controllers
                 }
                 else
                 {
-                    //List<TimeSpan> days = new List<TimeSpan>();
-                   // days.Add(difference);
-                    //TempData["MethodResult"] = difference;
+                  
                 }
-            }*/
+            }
             if (results.Count == 0)
             {
                 TempData["MethodResult"] = "There were no opportunitites posted within the past 60 days.";
-                return RedirectToAction("ManageOpportunities");
+                return View("ManageOpportunities");
             }
-            ViewData.Model = results;
-            return RedirectToAction("ManageOpportunities");
+            TempData["MethodResult"] = "You are viewing of the opportunitites posted within the past 60 days.";
+            ViewData.Model = results.AsEnumerable();
+            return View("ManageOpportunities");
         }
-        //working progress 
+        //working
 
         /// *************************************************************************************************************************///
         /// ********************************************End of Opportunity Methods*****************************************************///

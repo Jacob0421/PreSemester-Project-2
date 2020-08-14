@@ -153,6 +153,11 @@ namespace PreSemester_Project.Controllers
             {
 
                 var finalResults = new OpportunityMatchesView { _volunteer = findVolOpp, _opportunityList = results };
+
+                if (HttpContext.Session.GetString("Username") != "Admin")
+                    return View("MyOpportunityMatches", finalResults);
+
+
                 return View(finalResults);
             }
         }

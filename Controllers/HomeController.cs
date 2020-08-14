@@ -39,31 +39,40 @@ namespace PreSemester_Project.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult Login(IFormCollection Form)
+        public IActionResult Login(IFormCollection Form)
         {
-            // LOGIN FORM VALIDATION IS WORKING...
+            //LOGIN FORM VALIDATION IS WORKING...
             // WILL UNCOMMENT TOWARDS END OF PROJECT
-            return RedirectToAction("Options");
+            //return RedirectToAction("Options");
 
-            ///// taking in login form from index.cshtml and gathering variables
-            //string username = (Form["UserName"].ToString());
-            //string password = (Form["Password"].ToString());
+            /// taking in login form from index.cshtml and gathering variables
+            string username = (Form["UserName"].ToString());
+            string password = (Form["Password"].ToString());
 
-            ////validation of "admin" credentials
-            //if (username == "Admin" && password == "Admin")
-            //{
-            //    //initializing session variables
-            //    HttpContext.Session.SetString("Username", username);
-            //    HttpContext.Session.SetString("Password", password);
-            //    return View("Options");
-            //} 
-            //else
-            //{
+            //validation of "admin" credentials
+            if (username == "Admin" && password == "Admin")
+            {
+                //initializing session variables
+                HttpContext.Session.SetString("Username", username);
+                HttpContext.Session.SetString("Password", password);
+                return View("Options");
+            }
+            else
+            {
 
-            //    //message returned if invalid credentials are entered
-            //    ViewBag.error = "Invalid Credentials: Please re-enter.";
-            //    return View("Index");
-            //} 
+                foreach (var volunteer in _volunteerRepository.GetAllVolunteers())
+                {
+                    if (volunteer.Username == username && volunteer.Password == password)
+                    {
+                        HttpContext.Session.SetString("Username", username);
+                        HttpContext.Session.SetString("Password", password);
+                        return RedirectToAction("VolunteerOptions");
+                    }
+                }
+
+                ViewBag.error = "Username: Admin<br />Password: Admin";
+                return View("Index");
+            }
         }
 
         public ActionResult Options()
@@ -112,7 +121,7 @@ namespace PreSemester_Project.Controllers
             return RedirectToAction("ManageVolunteers");
         }
 
-       
+
         [HttpGet]
         public ActionResult OpportunityMatches(int id)
         {
@@ -125,22 +134,24 @@ namespace PreSemester_Project.Controllers
                 if (opp.center == findVolOpp.CenterPreferences)
                 {
                     results.Add(opp);
-                   
-                }
-                else
-                {
 
                 }
             }
 
-            if (results.Count == 0)
+            if (results.Count == 0 && HttpContext.Session.GetString("Username") == "Admin")
             {
-                TempData["error"] = "Opportunity match not found.";
+                ViewData["error"] = "Opportunity match not found.";
                 return RedirectToAction("ManageVolunteers");
+            }
+            else if (results.Count == 0)
+            {
+                ViewData["error"] = "No matches found.";
+                ViewData.Model = new OpportunityMatchesView { _volunteer = findVolOpp, _opportunityList = results };
+                return View("VolunteerOptions");
             }
             else
             {
-                
+
                 var finalResults = new OpportunityMatchesView { _volunteer = findVolOpp, _opportunityList = results };
                 return View(finalResults);
             }
@@ -154,8 +165,8 @@ namespace PreSemester_Project.Controllers
 
         public RedirectToActionResult Delete(int id)
         {
-           
-           Volunteer vol =  _volunteerRepository.Delete(id);
+
+            Volunteer vol = _volunteerRepository.Delete(id);
             TempData["deleted"] = vol.FirstName + " " + vol.LastName + " has been deleted.";
             return RedirectToAction("ManageVolunteers");
         }
@@ -170,9 +181,17 @@ namespace PreSemester_Project.Controllers
         }
 
         [HttpPost]
-        public RedirectToActionResult Edit(Volunteer changedVol)
+        public RedirectToActionResult Edit(Volunteer changedVol, string cancel, string submit)
         {
-            _volunteerRepository.Edit(changedVol);
+            if (!string.IsNullOrWhiteSpace(submit))
+            {
+                _volunteerRepository.Edit(changedVol);
+
+            }
+            if (!string.IsNullOrEmpty(cancel))
+            {
+                return RedirectToAction("ManageVolunteers");
+            }
 
             return RedirectToAction("ManageVolunteers");
         }
@@ -229,7 +248,7 @@ namespace PreSemester_Project.Controllers
                 TempData["filteredBy"] = "There are no volunteers that match your filtering criteria.";
             }
 
-            
+
 
             return View("ManageVolunteers");
         }
@@ -243,13 +262,52 @@ namespace PreSemester_Project.Controllers
         }
 
         /// *************************************************************************************************************************///
-        /// ********************************************End of Volunteer Methods*****************************************************///
+        /// ********************************************End of Admin Volunteer Methods***********************************************///
+        /// *************************************************************************************************************************///
+
+        /// *************************************************************************************************************************///
+        /// ********************************************Beginning of non-admin Methods***********************************************///
+        /// *************************************************************************************************************************///
+        public IActionResult VolunteerOptions()
+        {
+            Volunteer volIn = _volunteerRepository.GetVolunteerbyUsername(HttpContext.Session.GetString("Username"));
+            ViewData.Model = volIn;
+            return View();
+        }
+        public IActionResult Edited()
+        {
+            ViewData.Model = _volunteerRepository.GetVolunteer((int)TempData["id"]);
+            return View("MyDetails");
+        }
+
+        [HttpGet]
+        public IActionResult MyDetails(int id)
+        {
+            ViewData.Model = _volunteerRepository.GetVolunteer(id);
+            return View();
+        }
+        [HttpGet]
+        public IActionResult EditMyDetails(int id)
+        {
+            ViewData.Model = _volunteerRepository.GetVolunteer(id);
+            return View();
+        }
+        [HttpPost]
+        public RedirectToActionResult EditMyDetails(Volunteer MyChanges)
+        {
+            _volunteerRepository.Edit(MyChanges);
+
+            TempData["id"] = MyChanges.id;
+            return RedirectToAction("Edited");
+        }
+        /// *************************************************************************************************************************///
+        /// ********************************************End of non-admin Methods*****************************************************///
         /// *************************************************************************************************************************///
 
         /// *************************************************************************************************************************///
         /// ********************************************Beginning of Opportunity Methods*********************************************///
         /// *************************************************************************************************************************///
-     
+
 
         public IActionResult CancelOpportunity()
         {
@@ -274,14 +332,14 @@ namespace PreSemester_Project.Controllers
         }
         //working
         [HttpPost]
-        public RedirectToActionResult CreateOpportunities(Opportunity opportunity) 
+        public RedirectToActionResult CreateOpportunities(Opportunity opportunity)
         {
             _opportunityRepository.Add(opportunity);
             return RedirectToAction("ManageOpportunities");
         }
         //working
-      
-        public RedirectToActionResult DeleteOpportunity (int id)
+
+        public RedirectToActionResult DeleteOpportunity(int id)
         {
             Opportunity deleted = _opportunityRepository.Delete(id);
             TempData["MethodResult"] = deleted.title + " was removed.";
@@ -360,7 +418,7 @@ namespace PreSemester_Project.Controllers
                 ViewData.Model = results.AsEnumerable();
                 TempData["filteredBy"] = "Filtered by " + center + ".";
             }
-            else if(center == "All")
+            else if (center == "All")
             {
                 ViewData.Model = _opportunityRepository.GetAllOpportunities();
                 TempData["filteredBy"] = "You are viewing all of the opportunities posted.";
@@ -380,7 +438,7 @@ namespace PreSemester_Project.Controllers
         public ActionResult SearchKeywords(string key)
         {
             IEnumerable<Opportunity> results = _opportunityRepository.SearchKeywords(key);
-            
+
             if (results.Any())
             {
                 ViewData.Model = results;
@@ -413,16 +471,16 @@ namespace PreSemester_Project.Controllers
                 DateTime posted = opp.datePosted.Date;
                 TimeSpan difference = today.Subtract(posted);
                 int daysDiff = difference.Days;
-                
+
                 if (daysDiff <= 60)
                 {
                     results.Add(opp);
                     ViewData.Model = results.AsEnumerable();
-                    
+
                 }
                 else
                 {
-                  
+
                 }
             }
             if (results.Count == 0)

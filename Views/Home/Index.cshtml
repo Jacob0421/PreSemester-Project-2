@@ -17,9 +17,11 @@
     <body>
         <div id="header">
             <h1 class="display-4">Welcome to the Volunteer Management System</h1>
-        </div>  
+        </div>
 
-        @ViewBag.error
+        <p class="text-danger">
+            @Html.Raw(@ViewBag.error)
+        </p>
 
         <form method="post" action="@Url.Action("Login", "Home")">
             <table>

@@ -1,0 +1,20 @@
+﻿@model PreSemester_Project.Models.Volunteer;
+
+@{
+    ViewData["Title"] = "Options";
+}
+
+<DOCTYPE! html>
+    <html lang="en">
+
+    <body>
+        <form asp-controller="Home" method="get">
+            <p>What would you like to do today?</p>
+            <input type="hidden" name="id" value="@Model.id"/>
+            <input type="submit" value="View Opportunity Matches" formaction="OpportunityMatches">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+            <input type="submit" value="View Your Info" formaction="MyDetails">
+        </form>
+
+
+    </body>
+</html>

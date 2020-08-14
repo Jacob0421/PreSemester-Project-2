@@ -27,6 +27,10 @@ namespace PreSemester_Project
             services.AddControllersWithViews();
             services.AddSingleton<IVolunteerRepository, VolunteerRepository>();
             services.AddSingleton<IOpportunityRepository, OpportunityRepository>();
+            services.AddSession(options => {
+                options.IdleTimeout = TimeSpan.FromMinutes(15);//You can set Time   
+            });
+            services.AddMvc();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -46,6 +50,8 @@ namespace PreSemester_Project
             app.UseStaticFiles();
 
             app.UseRouting();
+
+            app.UseSession();
 
             app.UseAuthorization();
 
